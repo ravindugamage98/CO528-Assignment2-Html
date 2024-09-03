@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; 
+            color: #1a1a1a; 
+            text-align: center;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 20px;
+        }
+        input[type="number"],
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        input[type="radio"] {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <label for="angleInput">Enter Angle in Degrees (0-360):</label>
+    <input type="number" id="angleInput" min="0" max="360" value="0">
+    <input type="range" id="angleSlider" min="0" max="360" value="0">
+    
+    <div>
+        <input type="radio" name="commonAngles" value="0"> 0°
+        <input type="radio" name="commonAngles" value="45"> 45°
+        <input type="radio" name="commonAngles" value="60"> 60°
+        <input type="radio" name="commonAngles" value="90"> 90°
+        <input type="radio" name="commonAngles" value="180"> 180°
+    </div>
+
+    <script>
+        const angleInput = document.getElementById('angleInput');
+        const angleSlider = document.getElementById('angleSlider');
+        const commonAngles = document.querySelectorAll('input[name="commonAngles"]');
+
+        let currentAngle = 0;
+        updateUI();
+
+        angleInput.addEventListener('input', handleAngleInputChange);
+        angleSlider.addEventListener('input', handleSliderChange);
+        commonAngles.forEach((radio) => radio.addEventListener('change', handleCommonAngleChange));
+
+        function handleAngleInputChange() {
+            currentAngle = parseInt(angleInput.value);
+            updateUI();
+        }
+
+        function handleSliderChange() {
+            currentAngle = parseInt(angleSlider.value);
+            updateUI();
+        }
+
+        function handleCommonAngleChange(event) {
+            currentAngle = parseInt(event.target.value);
+            updateUI();
+        }
+
+        function updateUI() {
+            angleInput.value = currentAngle;
+            angleSlider.value = currentAngle;
+            commonAngles.forEach((radio) => {
+                radio.checked = parseInt(radio.value) === currentAngle;
+            });
+        }
+    </script>
+
+</body>
+</html>
